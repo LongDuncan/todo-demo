@@ -35,7 +35,7 @@ class ToDoController(val todoRepository: ToDoRepository) {
     @POST
     @Operation(description = "Create a new todo")
     @Transactional
-    fun createTodo(@Valid todo: ToDoEntity) : Response {
+    fun createTodo(@Valid todo: ToDoEntity): Response {
         todoRepository.persist(todo)
         return Response.status(Status.CREATED).entity(todo).build();
 
