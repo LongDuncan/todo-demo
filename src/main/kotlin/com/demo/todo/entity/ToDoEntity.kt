@@ -2,14 +2,29 @@ package com.demo.todo
 
 import io.quarkus.hibernate.orm.panache.kotlin.PanacheEntity
 
+import javax.persistence.Id;
+import javax.persistence.GeneratedValue
 import javax.persistence.Column
 import javax.persistence.Entity
-import javax.validation.constraints.NotBlank
+import javax.persistence.GenerationType
 
+import javax.validation.constraints.NotBlank
 import org.eclipse.microprofile.openapi.annotations.media.Schema
 
 @Entity()
 data class ToDoEntity(
+
+    // @Id
+    // @GeneratedValue(strategy = GenerationType.AUTO)
+    // private val id: Unit? = null,
+
+    // override fun getId(): Long? {
+    //     return id
+    // }
+
+    // override fun setId(id: Long?) {
+    //     this.id = id
+    // }
 
     // @NotBlank
     @Column(unique = true)

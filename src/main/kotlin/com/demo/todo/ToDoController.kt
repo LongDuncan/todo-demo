@@ -6,6 +6,8 @@ import javax.ws.rs.GET
 import javax.ws.rs.POST
 import javax.ws.rs.Path
 import javax.ws.rs.Produces
+import javax.ws.rs.PathParam
+import javax.ws.rs.WebApplicationException
 import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
 import javax.ws.rs.core.Response.Status;
@@ -31,6 +33,18 @@ class ToDoController(val todoRepository: ToDoRepository) {
     fun getAll() : List<ToDoEntity> {
         return todoRepository.listAll(Sort.by("order"))
     }
+
+    @GET
+    @Path("/{id}")
+    @Operation(description = "Get a specific todo by id")
+    fun getOne(@PathParam("id") id: Long): ToDoEntity {
+        var entity: ToDoEntity ?= todoRepository.findById(id)
+        if (entity == null) {
+            throw WebApplicationException("Todo with id of " + id + " does not exist.", Status.NOT_FOUND);
+        }
+        return entity;
+    }
+
 
     @POST
     @Operation(description = "Create a new todo")
