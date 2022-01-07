@@ -4,6 +4,8 @@ import io.quarkus.panache.common.Sort
 
 import javax.ws.rs.GET
 import javax.ws.rs.POST
+import javax.ws.rs.DELETE
+import javax.ws.rs.PATCH
 import javax.ws.rs.Path
 import javax.ws.rs.Produces
 import javax.ws.rs.PathParam
@@ -40,9 +42,9 @@ class ToDoController(val todoRepository: ToDoRepository) {
     fun getOne(@PathParam("id") id: Long): ToDoEntity {
         var entity: ToDoEntity ?= todoRepository.findById(id)
         if (entity == null) {
-            throw WebApplicationException("Todo with id of " + id + " does not exist.", Status.NOT_FOUND);
+            throw WebApplicationException("Todo with id of " + id + " does not exist.", Status.NOT_FOUND)
         }
-        return entity;
+        return entity
     }
 
 
@@ -51,8 +53,43 @@ class ToDoController(val todoRepository: ToDoRepository) {
     @Transactional
     fun createTodo(@Valid todo: ToDoEntity): Response {
         todoRepository.persist(todo)
-        return Response.status(Status.CREATED).entity(todo).build();
+        return Response.status(Status.CREATED).entity(todo).build()
 
+    }
+
+    @DELETE
+    @Transactional
+    @Operation(description = "Remove all completed todos")
+    fun deleteCompleted(): Response {
+        todoRepository.deleteCompleted()
+        return Response.noContent().build()
+    }
+
+    @DELETE
+    @Transactional
+    @Path("/{id}")
+    @Operation(description = "Delete a specific todo")
+    fun deleteOne(@PathParam("id") id: Long):Response {
+        var entity: ToDoEntity ?= todoRepository.findById(id)
+        if (entity == null) {
+            throw WebApplicationException("Todo with id of " + id + " does not exist.", Status.NOT_FOUND);
+        }
+        entity.delete();
+        return Response.noContent().build();
+    }
+
+    @PATCH
+    @Path("/{id}")
+    @Transactional
+    @Operation(description = "Update an exiting todo")
+    fun update(@Valid todo: ToDoEntity, @PathParam("id") id:Long): Response {
+        var entity: ToDoEntity ?= todoRepository.findById(id)
+        entity?.id = id;
+        entity?.completed = todo.completed;
+        entity?.order = todo.order;
+        entity?.title = todo.title;
+        entity?.url = todo.url;
+        return Response.ok(entity).build();
     }
 }
 
