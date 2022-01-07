@@ -3,8 +3,6 @@ package com.demo.todo
 import java.util.stream.Stream
 
 import io.quarkus.test.junit.QuarkusTest
-import io.quarkus.test.h2.H2DatabaseTestResource
-import io.quarkus.test.TestTransaction
 import io.quarkus.test.common.QuarkusTestResource
 import io.restassured.http.ContentType
 import io.restassured.response.ValidatableResponse
@@ -21,9 +19,7 @@ import io.restassured.RestAssured.given
 import org.hamcrest.CoreMatchers.`is`
 
 @QuarkusTest
-@TestTransaction
 @TestInstance(PER_CLASS)
-@QuarkusTestResource(H2DatabaseTestResource::class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation::class)
 class ToDoControllerTest {
 
