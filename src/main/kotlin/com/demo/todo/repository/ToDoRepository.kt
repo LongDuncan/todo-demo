@@ -14,6 +14,7 @@ class ToDoRepository: PanacheRepository<ToDoEntity> {
     fun findCompleted(): List<ToDoEntity> =
         list("completed", true);
 
-    fun deleteCompleted(): Long =
-        delete("completed", true);
+    fun deleteCompleted(): Long {
+        return delete("completed", true)
+    }
 }
