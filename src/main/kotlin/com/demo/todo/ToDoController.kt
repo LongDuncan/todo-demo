@@ -25,11 +25,6 @@ import org.eclipse.microprofile.openapi.annotations.tags.Tag
 @Tag(name = "Todo Resource", description = "All Todo Operations")
 class ToDoController(val todoRepository: ToDoRepository) {
 
-    // @GET
-    // @Produces(MediaType.TEXT_PLAIN)
-    // fun hello() = "Hello RESTEasy"
-
-
     @GET
     @Operation(description = "Get all the todos")
     fun getAll() : List<ToDoEntity> {
@@ -72,10 +67,10 @@ class ToDoController(val todoRepository: ToDoRepository) {
     fun deleteOne(@PathParam("id") id: Long):Response {
         var entity: ToDoEntity ?= todoRepository.findById(id)
         if (entity == null) {
-            throw WebApplicationException("Todo with id of " + id + " does not exist.", Status.NOT_FOUND);
+            throw WebApplicationException("Todo with id of " + id + " does not exist.", Status.NOT_FOUND)
         }
-        entity.delete();
-        return Response.noContent().build();
+        entity.delete()
+        return Response.noContent().build()
     }
 
     @PATCH
@@ -84,12 +79,12 @@ class ToDoController(val todoRepository: ToDoRepository) {
     @Operation(description = "Update an exiting todo")
     fun update(@Valid todo: ToDoEntity, @PathParam("id") id:Long): Response {
         var entity: ToDoEntity ?= todoRepository.findById(id)
-        entity?.id = id;
-        entity?.completed = todo.completed;
-        entity?.order = todo.order;
-        entity?.title = todo.title;
-        entity?.url = todo.url;
-        return Response.ok(entity).build();
+        entity?.id = id
+        entity?.completed = todo.completed
+        entity?.order = todo.order
+        entity?.title = todo.title
+        entity?.url = todo.url
+        return Response.ok(entity).build()
     }
 }
 

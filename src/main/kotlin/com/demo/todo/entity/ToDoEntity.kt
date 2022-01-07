@@ -14,19 +14,7 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema
 @Entity()
 data class ToDoEntity(
 
-    // @Id
-    // @GeneratedValue(strategy = GenerationType.AUTO)
-    // private val id: Unit? = null,
-
-    // override fun getId(): Long? {
-    //     return id
-    // }
-
-    // override fun setId(id: Long?) {
-    //     this.id = id
-    // }
-
-    // @NotBlank
+    @NotBlank
     @Column(unique = true)
     var title: String = "",
 
@@ -39,6 +27,3 @@ data class ToDoEntity(
     var url: String = "",
 
 ):PanacheEntity()
-
-
-//curl.exe -X POST -H "Content-Type: application/json" -d '{"id": 0,"title": "string","completed": true,"order": 0,"url": "string"}' http://127.0.0.1:8080/api

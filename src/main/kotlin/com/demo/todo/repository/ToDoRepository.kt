@@ -9,10 +9,10 @@ class ToDoRepository: PanacheRepository<ToDoEntity> {
         list("title", title)
 
     fun findNotCompleted(): List<ToDoEntity> =
-        list("completed", false);
+        list("completed", false)
 
     fun findCompleted(): List<ToDoEntity> =
-        list("completed", true);
+        list("completed", true)
 
     fun deleteCompleted(): Long {
         return delete("completed", true)

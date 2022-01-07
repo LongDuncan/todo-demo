@@ -19,8 +19,6 @@ import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS
 import io.restassured.RestAssured.given
 import org.hamcrest.CoreMatchers.`is`
-import org.json.JSONObject
-import com.google.common.base.Objects
 
 @QuarkusTest
 @TestTransaction
@@ -37,7 +35,7 @@ class ToDoControllerTest {
             .get("/api")
         .then()
             .statusCode(200)
-            .body(`is`("[]"));
+            .body(`is`("[]"))
     }
 
     @Test @Order(2)
@@ -47,7 +45,7 @@ class ToDoControllerTest {
         .`when`()
             .get("/api/1")
         .then()
-            .statusCode(404);
+            .statusCode(404)
     }
 
     @Test @Order(3)
@@ -99,14 +97,14 @@ class ToDoControllerTest {
         .`when`()
                 .delete("/api/{id}")
         .then()
-                .statusCode(expectedStatus);
+                .statusCode(expectedStatus)
     }
 
     private fun  todoItemsToDelete():Stream<Arguments> {
         return Stream.of(
                 Arguments.of(1, 204),
                 Arguments.of(2, 404)
-        );
+        )
     }
 
     val ONE:String = "{\"completed\":false,\"order\":0,\"title\":\"Test ToDo One\",\"url\": \"string\"}"
