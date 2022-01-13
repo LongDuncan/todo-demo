@@ -41,7 +41,7 @@ class ToDoControllerTest {
         .`when`()
             .get("/api/1")
         .then()
-            .statusCode(404)
+            .statusCode(204)
     }
 
     @Test @Order(3)
@@ -99,7 +99,7 @@ class ToDoControllerTest {
     private fun  todoItemsToDelete():Stream<Arguments> {
         return Stream.of(
                 Arguments.of(1, 204),
-                Arguments.of(2, 404)
+                Arguments.of(2, 204)
         )
     }
 
